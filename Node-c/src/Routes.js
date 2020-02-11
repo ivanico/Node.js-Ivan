@@ -70,6 +70,21 @@ function Routes (server, localStorage) {
             res.status(201).json(`Succesfully created the entry`)
         }
     })
+
+    server.delete('/books/remove/:isbn', (req, res) =>{
+        const found = localStorage.findIndex((element) =>{
+            element.isbn === req.params.isbn
+        })
+
+        if (found) {
+            localStorage.splice(found, 1)
+            res.status(200).json("Succesfully deleted")
+        }
+        else{
+            res.status(400).json('Bad request, no data found!')
+        }
+    })
+
 }
 
 
