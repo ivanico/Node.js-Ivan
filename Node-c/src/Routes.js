@@ -1,4 +1,4 @@
-function Routes (server) {
+function Routes (server, localStorage) {
     /*request i reponse se dvata parametri na callbackot  na rutata */
     server.get(`/`, (request, response) => {
         /*tuka se obrabotuva requestot sto stiga na rutata */
@@ -56,7 +56,23 @@ function Routes (server) {
         }
     })
 
+
+    server.post(`/books/new` , (req,res) => {
+        //prima info za nova kniga
+        const data = req.body //ovde treba da ima objekt so nesto vnatre {...}
+        if (!data) {
+            console.log(data)
+            res.status(400).json(`Bad request, no data found.`)
+        }
+        else{
+            localStorage.push(data)
+            console.log(localStorage)
+            res.status(201).json(`Succesfully created the entry`)
+        }
+    })
 }
+
+
 
 //so ova se exportira funkcijata od gore moze i povekje funkcii 
 module.exports = {

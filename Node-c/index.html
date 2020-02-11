@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    
 </head>
 <body>
-    <div>
-        <button id="1" onclick="getUsers()">
-            Get all users
-        </button>
-        <input id="id" name="id"/>
-        <button id="2" onclick="getUsersById()">
-            Get user by id
-        </button>
+    <div class="container">
+        <input id="isbn" placeholder="ISBN" class="form-control"/><br>
+        <input id="name" placeholder="Name" class="form-control"/><br>
+        <input id="author" placeholder="Author" class="form-control"/><br>
+        <button id="submit" onclick="createNewBook()" class="btn btn-success">Submit</button>
     </div>
+
     <script>
-        function getUsers () {
-            fetch('http://localhost:3001/users').then(response => response.json()).then(json => console.log(json))       
+        function createNewBook () {
+            const data = {
+                isbn: document.getElementById('isbn').value,
+                name: document.getElementById('name').value,
+                author: document.getElementById('author').value
+            }
+            fetch('http://localhost:3001/books/new', 
+            {
+                method: "POST",
+                headers: {
+                    "Content-type":'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(json => console.log(json))
         }
-        function getUsersById () {
-            //get input value
-            let userId = document.getElementById("id").value
-            fetch(`http://localhost:3001/users/${userId}`).then(response => response.json()).then(json => console.log(json))
-        }
+
     </script>
 </body>
 </html>
