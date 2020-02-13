@@ -98,6 +98,17 @@ function Routes (server, localStorage) {
         res.status(200).json(newArray)
     })
 
+    server.get('/books/get-book-by-author/:author', (req , res) => {
+        for (i=0;i<localStorage.length;i++) {
+            let newAuthor = []
+
+            newAuthor = localStorage.filter((element) =>{
+                return element.author ===  req.params.author
+            })
+            res.status(200).json(newAuthor)
+        }
+    })
+
 
 
 
