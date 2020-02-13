@@ -58,6 +58,7 @@ function Routes (server, localStorage) {
 
 
     server.post(`/books/new` , (req,res) => {
+
         //prima info za nova kniga
         const data = req.body //ovde treba da ima objekt so nesto vnatre {...}
         if (!data) {
@@ -65,11 +66,42 @@ function Routes (server, localStorage) {
             res.status(400).json(`Bad request, no data found.`)
         }
         else{
+            const found = localStorage.find(element => {
+                return data.isbn === element.isbn
+            })
+
+            if (found) {
+                res.status(200).json("this isbn alrady exists")
+                return
+            }
+            data.creationDate = new Date();
+        
             localStorage.push(data)
             console.log(localStorage)
             res.status(201).json(`Succesfully created the entry`)
         }
+
     })
+
+    server.get(`/books/get-todays-books`,(req,res) => {
+        let newArray = []
+        const today =new Date()
+        const shortDate =today.getDate() + '/' + today.getMonth() + '/' + today.getFullYear()
+    for (i=0;i<localStorage.length;i++) {
+        const longDate = localStorage[i].creationDate
+        const bookDate = longDate.getDate() + '/' + longDate.getMonth() + '/' + longDate.getFullYear()
+
+        if(shortDate === bookDate){
+            newArray.push(localStorage[i])
+        }
+    }
+        res.status(200).json(newArray)
+    })
+
+
+
+
+
 
     server.delete('/books/remove/:isbn', (req, res) =>{
         const found = localStorage.findIndex((element) =>{

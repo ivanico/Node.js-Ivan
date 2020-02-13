@@ -14,11 +14,11 @@ const port = 3001;
 
 const localStorage = [];
 
-localStorage.push({isbn:`1`, name:`Harry Potter`})
-localStorage.push({isbn:`2`, name:`World of warcraft`})
-localStorage.push({isbn:`3`, name:`Witcher`})
-localStorage.push({isbn:`4`, name:`The lord of the rings`})
-localStorage.push({isbn:`5`, name:`Star wars`})
+// localStorage.push({isbn:`1`, name:`Harry Potter`})
+// localStorage.push({isbn:`2`, name:`World of warcraft`})
+// localStorage.push({isbn:`3`, name:`Witcher`})
+// localStorage.push({isbn:`4`, name:`The lord of the rings`})
+// localStorage.push({isbn:`5`, name:`Star wars`})
 
 server.use(bodyParser.urlencoded({extended: false}))
 server.use(bodyParser.json())
