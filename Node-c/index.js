@@ -1,6 +1,6 @@
 const express = require('express');
 
-const routes = require(`./src/Routes`)  //vaka se importira funkcija od dr js file
+const Routes = require(`./src/Routes`)  //vaka se importira funkcija od dr js file
 
 const cors =require('cors')
 
@@ -8,6 +8,7 @@ const bodyParser = require('body-parser') //npm install body-parser
 
 const server = express();
 
+require("dotenv").config();
 
 const mongoose = require ('mongoose') //npm install mongoose
 
@@ -35,9 +36,9 @@ server.use(bodyParser.json())
 // localStorage['2'] = 'Mirko';
 // localStorage['3'] = 'Stanko';
 
-routes.Routes(server);                       //vaka se povikuva
+Routes(server);                       //vaka se povikuva rutite
 
-mongoose.connect(`mongodb+srv://ico:ico@cluster0-j520k.mongodb.net/test?retryWrites=true&w=majority`,{useNewUrlParser: true , useUnifiedTopology: true});
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0-j520k.mongodb.net/test?retryWrites=true&w=majority`,{useNewUrlParser: true , useUnifiedTopology: true});
 
 const db = mongoose.connection;
 db.on("error", () => {console.log('error connecting'+ error)});
@@ -46,21 +47,21 @@ db.once('open', () => {
     server.listen(port, () => {
         console.log(`Server started on port ${port}, hello world!`);
         
-        const firstBook = new models.Book({
-            isbn:1,
-            title:'Chernobyl',
-            author:'Pero',
-            year:'1976'
-        })             //bez const firstBook moze da se sejvne posle objektot.save
+        // const firstBook = new models.Book({
+        //     isbn:1,
+        //     title:'Chernobyl',
+        //     author:'Pero',
+        //     year:'1976'
+        // })             //bez const firstBook moze da se sejvne posle objektot.save
         
-        firstBook.save(( err , book ) => {
-            if (err) {
-                console.log('Data was not saved :' + err)
-            }
-            else{
-                console.log(book)
-            }
-        });
+        // firstBook.save(( err , book ) => {
+        //     if (err) {
+        //         console.log('Data was not saved :' + err)
+        //     }
+        //     else{
+        //         console.log(book)
+        //     }
+        // });
     });
 })
 
