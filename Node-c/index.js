@@ -8,7 +8,7 @@ const bodyParser = require('body-parser') //npm install body-parser
 
 const server = express();
 
-require("dotenv").config();
+require("dotenv").config();            //dotenv
 
 const mongoose = require ('mongoose') //npm install mongoose
 

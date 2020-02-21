@@ -10,19 +10,34 @@
 <body>
     <div class="container">
         <input id="isbn" placeholder="ISBN" class="form-control"/><br>
-        <input id="name" placeholder="Name" class="form-control"/><br>
+        <input id="title" placeholder="Title" class="form-control"/><br>
         <input id="author" placeholder="Author" class="form-control"/><br>
+        <input id="year" placeholder="Year" class="form-control"/><br>
         <button id="submit" onclick="createNewBook()" class="btn btn-success">Submit</button>
+    </div>
+    <br>
+    <div class="container">
+        <input id="isbn-to-delete" placeholder="ISBN" class="form-control"/><br>
+        <button id="delete" onclick="removeBook()" class="btn btn-danger">Delete</button>
     </div>
 
     <script>
+        function removeBook(){
+            fetch(`http://localhost:3001/remove-book/${document.getElementById('isbn-to-delete').value}`,
+            {
+                method:'delete',
+            })
+            .then(response =>response.json())
+            .then(json=>console.log(json))
+        }
         function createNewBook () {
             const data = {
                 isbn: document.getElementById('isbn').value,
-                name: document.getElementById('name').value,
-                author: document.getElementById('author').value
+                title: document.getElementById('title').value,
+                author: document.getElementById('author').value,
+                year:document.getElementById("year").value
             }
-            fetch('http://localhost:3001/books/new', 
+            fetch('http://localhost:3001/add-book', 
             {
                 method: "POST",
                 headers: {
@@ -33,6 +48,7 @@
             .then(res => res.json())
             .then(json => console.log(json))
         }
+
 
     </script>
 </body>
