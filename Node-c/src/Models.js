@@ -9,7 +9,7 @@ const bookSchema = new mongoose.Schema({
 
 const authorSchema = new mongoose.Schema({
     // Book model templet
-    firstName:{type:String,required:true},
+    fistName:{type:String,required:true},
     lastName:{type:String,required:false},
     yearOfBirth:{type:Date,required:false},
     yearOfPassing:{type:Date,required:false}
