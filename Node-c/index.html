@@ -20,6 +20,13 @@
         <input id="isbn-to-delete" placeholder="ISBN" class="form-control"/><br>
         <button id="delete" onclick="removeBook()" class="btn btn-danger">Delete</button>
     </div>
+    <div class="container">
+        <input id="fistName" placeholder="fistName" class="form-control"/><br>
+        <input id="lastName" placeholder="lastName" class="form-control"/><br>
+        <input id="yearOfBirth" placeholder="yearOfBirth" class="form-control"/><br>
+        <input id="yearOfDeath" placeholder="yearOfDeath" class="form-control"/><br>
+        <button id="submit" onclick="createAuthor()" class="btn btn-success">Submit</button>
+    </div>
 
     <script>
         function removeBook(){
@@ -38,6 +45,25 @@
                 year:document.getElementById("year").value
             }
             fetch('http://localhost:3001/add-book', 
+            {
+                method: "POST",
+                headers: {
+                    "Content-type":'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(json => console.log(json))
+        }
+
+        function createAuthor () {
+            const data = {
+                fistName: document.getElementById('fistName').value,
+                lastName: document.getElementById('lastName').value,
+                yearOfBirth: document.getElementById('yearOfBirth').value,
+                yearOfDeath:document.getElementById("yearOfDeath").value
+            }
+            fetch('http://localhost:3001/add-author', 
             {
                 method: "POST",
                 headers: {

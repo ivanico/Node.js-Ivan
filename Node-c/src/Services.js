@@ -8,15 +8,16 @@ class Services {
        res.status(200).send('You have reached the server!')
     }
 
-    async getAllBooks (req, res) {
+    async getAllDocs (req, res) {
         try{
-            const books =await models.Book.find({year: {$gt: '2000'}})  //bi mozelo i so $regex /20*/    /\*20*/
-            res.status(200).json(books)
+            // const books =await models.Book.find({year: {$gt: '2000'}})  //bi mozelo i so $regex /20*/    /\*20*/
+            res.status(200).json(res.docs)
         }
         catch(err){
             res.status(500).json({massage: 'Server error'+ err})
         }
     }
+
 
     async getBooksByAuthor (req,res) {
         try{
@@ -44,6 +45,33 @@ class Services {
             }
             const newBook = models.Book(data)    // moze i posle ova .save
             const saved = await newBook.save()
+
+            if(saved){
+                res.status(201).json('Succesffully added a new book')
+            }
+            else{
+                res.status(400).json('error in the data object')
+            }
+        }
+        catch(err){
+            res.status(500).json({massage: 'Server error'+ err})
+        }
+    }
+
+    async createAuthor (req,res) {
+        
+        try{
+
+            const data = req.body          //samo se stava se u data
+
+            const found = await models.Author.findOne({ fistName: data.fistName })  //se srcha u datata seite isbn
+            if(found){
+                res.status(400).json({massage:'Author alrady exists', Author:found})           
+
+                return
+            }
+            const newAuthor = models.Author(data)    // moze i posle ova .save
+            const saved = await newAuthor.save()
 
             if(saved){
                 res.status(201).json('Succesffully added a new book')
