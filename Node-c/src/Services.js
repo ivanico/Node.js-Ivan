@@ -117,7 +117,8 @@ class Services {
         const stream = fs.createWriteStream(
             './storage/new.txt', {flags: 'a'})
         stream.once('open', () =>{
-            stream.write(req.body.data)   // \n e nova linija posle 'hi \n'
+            let data =  JSON.parser(req.body.data)
+            stream.write(data)   // \n e nova linija posle 'hi \n'
             stream.end()
         })
         res.status(200).send('OK')
