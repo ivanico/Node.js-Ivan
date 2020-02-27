@@ -1,5 +1,5 @@
 const models = require('./Models');
-
+const fs = require('fs');
 
 
 class Services {
@@ -29,7 +29,7 @@ class Services {
         }
     }
 
-    //sejvuvanje kniga
+    //sejvuvanje kniga c8
 
     async createNewBook (req,res) {
         
@@ -84,7 +84,7 @@ class Services {
             res.status(500).json({massage: 'Server error'+ err})
         }
     }
-
+    //c9
     async removeBook (req,res) {
         try{
             const deleted = await models.Book.deleteOne({isbn:req.params.isbn})
@@ -100,7 +100,28 @@ class Services {
         }
     }
 
+    //c10
+    getFile(req, res) {
+        const file = fs.createReadStream('./storage/sample.pdf')
+        const size = fs.statSync('./storage/sample.pdf').size
+        
+        res.set({
+            'Content-Type': 'application/pdf',
+            'Content-Length': size
+        })
+        file.pipe(res)
+    }
 
+    writeFile(req, res) {
+
+        const stream = fs.createWriteStream(
+            './storage/new.txt', {flags: 'a'})
+        stream.once('open', () =>{
+            stream.write(req.body.data)   // \n e nova linija posle 'hi \n'
+            stream.end()
+        })
+        res.status(200).send('OK')
+    }
 }
 
 module.exports = new Services()

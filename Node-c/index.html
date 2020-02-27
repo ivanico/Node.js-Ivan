@@ -20,12 +20,24 @@
         <input id="isbn-to-delete" placeholder="ISBN" class="form-control"/><br>
         <button id="delete" onclick="removeBook()" class="btn btn-danger">Delete</button>
     </div>
+    <br>
     <div class="container">
         <input id="fistName" placeholder="fistName" class="form-control"/><br>
         <input id="lastName" placeholder="lastName" class="form-control"/><br>
         <input id="yearOfBirth" placeholder="yearOfBirth" class="form-control"/><br>
         <input id="yearOfDeath" placeholder="yearOfDeath" class="form-control"/><br>
         <button id="submit" onclick="createAuthor()" class="btn btn-success">Submit</button>
+    </div>
+    <br>
+    <br>
+    <div class="container">
+        <button id='download'class="btn btn-success" onclick="download()">PDF</button>
+    </div>
+    <br>
+    <div class='container'>
+        <input id='text' placeholder="Vensi Neso" class="form-control"/>
+        <br>
+        <button id='save'class="btn btn-success" onclick="saveText()">Save</button>
     </div>
 
     <script>
@@ -75,6 +87,23 @@
             .then(json => console.log(json))
         }
 
+        function download() {
+            window.open('http://localhost:3001/download-manual','_blank')
+        }
+
+        //c10
+        function saveText(){
+            const data = document.getElementById('text').value
+            fetch('http://localhost:3001//upload-file',{
+                method:'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: {data:data}
+            })
+            .then(res => res.json())
+            .then(json => console.log(json))
+        }
 
     </script>
 </body>

@@ -23,6 +23,14 @@ function Routes (server){
     Services.getAllDocs)
 
     server.post('/add-author', Services.createAuthor)
+
+    //c10
+    server.get('/download-manual', Services.getFile)
+
+    server.get('/upload-file', Services.writeFile)
+
+    server.post('/upload-file', Services.writeFile)
+
 }
 
 
